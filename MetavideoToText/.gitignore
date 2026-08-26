@@ -1,0 +1,16 @@
+.env
+cookies.txt
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+temp/
+*.wav
+*.mp3
+*.mp4
+*.webm
+*.m4a
+.DS_Store
+.bot.pid
+telegraph_token.txt

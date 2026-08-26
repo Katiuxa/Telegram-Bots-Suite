@@ -1,0 +1,16 @@
+﻿.env
+.env.*
+!.env.example
+smtp.env
+token.txt
+cookies.txt
+*cookies*
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+temp/
+*.log
+*.db
+*.sqlite
+telegraph_token.txt
