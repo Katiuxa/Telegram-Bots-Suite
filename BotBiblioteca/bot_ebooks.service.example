@@ -1,0 +1,18 @@
+[Unit]
+Description=Biblioteca Secreta (catalogo SQLite + envio EPUB)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=admin
+Group=admin
+WorkingDirectory=/home/admin/BotBiblioteca
+EnvironmentFile=/home/admin/BotBiblioteca/.env
+ExecStartPre=/bin/bash -c 'findmnt "$USB_PATH" >/dev/null'
+ExecStart=/home/admin/BotBiblioteca/.venv/bin/python /home/admin/BotBiblioteca/BotEbooks.py
+Restart=on-failure
+RestartSec=8
+
+[Install]
+WantedBy=multi-user.target

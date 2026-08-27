@@ -10,7 +10,7 @@ Uso personal, amigos y seguidores de Instagram. No hay LLM local en la Pi.
 |---|---|
 | [MetavideoToText](MetavideoToText/) | Vídeo/audio → texto (yt-dlp, ffmpeg, Groq, pulido) |
 | [BotMail](BotMail/) | Buzones temporales mail.tm + SQLite |
-| [BotBiblioteca](BotBiblioteca/) | Catálogo SQLite de epubs en USB 128 GB |
+| [BotBiblioteca](BotBiblioteca/) | Biblioteca Secreta: busca en SQLite (título/autor) y envía el EPUB desde el USB |
 | [OnlyNews](OnlyNews/) | Extrae artículo + fotos del HTML |
 | [BotConversor](BotConversor/) | Calibre `ebook-convert` |
 | [BotDescargador](BotDescargador/) | yt-dlp (TikTok, Reels, YouTube) |
