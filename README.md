@@ -11,7 +11,7 @@ Personal use, friends, and Instagram followers. There is no local LLM on the Pi.
 | [MetavideoToText](MetavideoToText/) | Video/audio to text (yt-dlp, ffmpeg, Groq, polish) |
 | [BotMail](BotMail/) | Disposable mail.tm inboxes plus SQLite |
 | [BotBiblioteca](BotBiblioteca/) | Biblioteca Secreta: SQLite search by title or author, then sends the EPUB from the USB drive |
-| [OnlyNews](OnlyNews/) | Extracts the article text and photos from the HTML |
+| [OnlyNews](OnlyNews/) | Extracts clean article text and media directly from HTML, bypassing paywalls, JavaScript blocks, and reader restrictions. |
 | [BotConversor](BotConversor/) | Calibre `ebook-convert` |
 | [BotDescargador](BotDescargador/) | yt-dlp (TikTok, Reels, YouTube) |
 
