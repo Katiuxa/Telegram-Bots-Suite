@@ -1,20 +1,20 @@
-# OnlyNoticias
+# OnlyNews
 
-Bot Telegram: pegas una URL de noticia y devuelve el texto (y las fotos del artículo). Corre como `mi_bot.service`.
+Telegram bot: paste a news URL and it returns the text (and the article photos). It runs as `mi_bot.service`.
 
-## Problema y qué se hizo
+## The problem and what was done
 
-- **Paywall de verdad:** si el medio no deja el cuerpo en el HTML, no hay artículo. No se rompe el paywall.
-- **Muchos sitios sí traen el texto en el origen** (`<p>`, JSON-LD, selectores de dominio). Ahí extrae.
-- Al principio solo salían párrafos `<p>`. Se amplió `article_extract.py` para **incluir las fotos** del artículo (`fetch_image_bytes` + envío a Telegram).
+- **A real paywall:** if the publisher does not put the body in the HTML, there is no article. The paywall is not bypassed.
+- **Many sites do ship the text in the page** (`<p>`, JSON-LD, domain selectors). That is what it extracts.
+- At first only `<p>` paragraphs came out. `article_extract.py` was extended to **include the article photos** (`fetch_image_bytes`, then send them to Telegram).
 
-National Geographic y otros dominios tienen selectores propios; el resto va por lista universal + trafilatura si está instalada.
+National Geographic and other domains have their own selectors. Everything else goes through a universal list, plus trafilatura if it is installed.
 
 ## Stack
 
-Python · BeautifulSoup · requests · trafilatura (opcional) · pyTelegramBotAPI
+Python · BeautifulSoup · requests · trafilatura (optional) · pyTelegramBotAPI
 
-## Ejecución
+## Run
 
 ```bash
 cd only-noticias
@@ -25,6 +25,6 @@ export TELEGRAM_BOT_TOKEN=...
 python3 mi_bot.py
 ```
 
-## Qué demuestra
+## What it shows
 
-Distinguir “el HTML ya trae el texto” de “paywall real”, y ampliar el parser (imágenes) sin inventar contenido.
+Telling "the HTML already contains the text" apart from "a real paywall", and extending the parser (images) without inventing content.

@@ -1,18 +1,18 @@
 # MetaMailbox
 
-Bot Telegram: crea y consulta buzones temporales (API mail.tm). Estado en SQLite (`correos_bot.db`).
+Telegram bot: creates and checks disposable inboxes (mail.tm API). State is stored in SQLite (`correos_bot.db`).
 
-## Problema y qué se hizo
+## The problem and what was done
 
-Enviar **hacia Gmail** (y en general Google) **no funciona**: Google rechaza el origen (correo temporal / relay no autenticado como remitente Google). El resto de destinos, sin incidencia relevante.
+Sending **to Gmail** (and to Google in general) **does not work**: Google rejects the origin (a disposable address / a relay that is not authenticated as a Google sender). Other destinations have no meaningful issue.
 
-mail.tm **no envía por su API**. El envío, si se usa, va por SMTP externo (Brevo u otro) en `smtp.env` — ver `smtp.env.example`. Las credenciales SMTP no van en el código.
+mail.tm **does not send through its API**. Sending, when it is used, goes through an external SMTP service (Brevo or another) in `smtp.env`. See `smtp.env.example`. SMTP credentials are not in the code.
 
 ## Stack
 
-Python · pyTelegramBotAPI · SQLite · mail.tm REST · SMTP opcional
+Python · pyTelegramBotAPI · SQLite · mail.tm REST · optional SMTP
 
-## Ejecución
+## Run
 
 ```bash
 cd meta-mailbox
@@ -24,8 +24,8 @@ cp .env.example .env
 python botmail.py
 ```
 
-En la Pi: `botmail.service`.
+On the Pi: `botmail.service`.
 
-## Qué demuestra
+## What it shows
 
-Leer un rechazo de correo (destino Gmail) y no pelearlo con hacks: es política del receptor, no un bug del bot.
+Reading a mail rejection (Gmail as the destination) and not fighting it with hacks: it is the recipient's policy, not a bug in the bot.

@@ -1,33 +1,33 @@
 # Telegram-Bots-Suite
 
-Bots Python en una Raspberry Pi 3B (1 GB, Debian, systemd). Un repo: mismas dependencias base (Telegram, HTTP, `.env`, venv) y carpetas independientes.
+Python bots on a Raspberry Pi 3B (1 GB, Debian, systemd). One repo: shared base dependencies (Telegram, HTTP, `.env`, venv) and independent folders.
 
-Uso personal, amigos y seguidores de Instagram. No hay LLM local en la Pi.
+Personal use, friends, and Instagram followers. There is no local LLM on the Pi.
 
-## Carpetas
+## Folders
 
-| Carpeta | Función |
+| Folder | Role |
 |---|---|
-| [MetavideoToText](MetavideoToText/) | Vídeo/audio → texto (yt-dlp, ffmpeg, Groq, pulido) |
-| [BotMail](BotMail/) | Buzones temporales mail.tm + SQLite |
-| [BotBiblioteca](BotBiblioteca/) | Biblioteca Secreta: busca en SQLite (título/autor) y envía el EPUB desde el USB |
-| [OnlyNews](OnlyNews/) | Extrae artículo + fotos del HTML |
+| [MetavideoToText](MetavideoToText/) | Video/audio to text (yt-dlp, ffmpeg, Groq, polish) |
+| [BotMail](BotMail/) | Disposable mail.tm inboxes plus SQLite |
+| [BotBiblioteca](BotBiblioteca/) | Biblioteca Secreta: SQLite search by title or author, then sends the EPUB from the USB drive |
+| [OnlyNews](OnlyNews/) | Extracts the article text and photos from the HTML |
 | [BotConversor](BotConversor/) | Calibre `ebook-convert` |
 | [BotDescargador](BotDescargador/) | yt-dlp (TikTok, Reels, YouTube) |
 
-Tokens en `.env` (cada carpeta tiene `.env.example`). Nada de claves en el código.
+Tokens live in `.env` (each folder has `.env.example`). No keys in the code.
 
-## Arranque (uno cualquiera)
+## Start (any one bot)
 
 ```bash
-cd MetavideoToText   # o BotMail, OnlyNews, ...
+cd MetavideoToText   # or BotMail, OnlyNews, ...
 python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
 set -a; . ./.env; set +a
-python bot/main.py   # o el .py de esa carpeta
+python bot/main.py   # or the .py file in that folder
 ```
 
-En la Pi lo lanza systemd, no una sesión interactiva.
+On the Pi, systemd starts them. They do not run from an interactive session.
 
-Home Lab: [debian-homelab](https://github.com/Katiuxa/debian-homelab).
+Home lab: [debian-homelab](https://github.com/Katiuxa/debian-homelab).

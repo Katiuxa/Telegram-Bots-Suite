@@ -1,24 +1,24 @@
 # Meta Media to Text
 
-Bot Telegram: enlace o fichero de vídeo/audio → transcripción. Corre en la Raspberry Pi 3B (1 GB) como `metavideototext-bot.service`. Uso propio, amigos y seguidores de Instagram.
+Telegram bot: a link or a video/audio file becomes a transcript. It runs on the Raspberry Pi 3B (1 GB) as `metavideototext-bot.service`. Personal use, friends, and Instagram followers.
 
-## Problema y qué se hizo
+## The problem and what was done
 
-1. **Cuota Groq.** Un solo modelo se acaba. `bot/services/groq_router.py` ordena modelos por calidad y salta al siguiente en 429 (cooldown). Prioriza las claves/modelos que aún tienen margen para que el bot no se quede mudo.
+1. **Groq quota.** A single model runs out. `bot/services/groq_router.py` orders models by quality and jumps to the next one on a 429 (cooldown). It prefers the keys and models that still have headroom, so the bot does not go silent.
 
-2. **Subtítulos de YouTube.** A veces no vienen o vienen mal. No se insistió en diarización (quién habla). El bot **pulsa el texto** con LLM para que se lea; la separación de interlocutores se hace **fuera**, pasando el archivo a Gemini. Menos lógica en la Pi, menos RAM y menos fallos a medias.
+2. **YouTube subtitles.** Sometimes they are missing or poor. Speaker diarization (who is talking) was not pursued inside the bot. The bot **polishes the text** with an LLM so it reads cleanly. Separating speakers is done **outside**, by passing the file to Gemini. Less logic on the Pi, less RAM, and fewer half-finished failures.
 
-3. **Vídeo +18.** yt-dlp con cookies de la cuenta del navegador abre contenido con edad. Se probó y se dejó: riesgo de bloqueo de cuenta. En `.env` `YTDLP_BROWSER` vacío en la Pi.
+3. **Age-restricted video.** yt-dlp with browser-account cookies can open age-gated content. It was tried and then dropped: account-lock risk. On the Pi, `YTDLP_BROWSER` in `.env` is empty.
 
-4. **Disco.** `temp/` se limpia (`cleanup_temp`). Con la SD de 8 GB esto era crítico; ahora la SD es 128 GB, pero 1 GB de RAM sigue limitando ffmpeg (hilos bajos).
+4. **Disk.** `temp/` is cleaned (`cleanup_temp`). This was critical with the 8 GB SD. The SD is now 128 GB, but 1 GB of RAM still limits ffmpeg (low thread count).
 
-No hay Whisper local ni Ollama en esta placa.
+There is no local Whisper and no Ollama on this board.
 
 ## Stack
 
 Python · python-telegram-bot · yt-dlp · ffmpeg · Groq Whisper · systemd
 
-## Instalación (Pi)
+## Install (Pi)
 
 ```bash
 sudo apt-get install -y ffmpeg python3-venv
@@ -27,22 +27,22 @@ python3 -m venv .venv
 . .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-nano .env   # TELEGRAM_BOT_TOKEN, GROQ_API_KEY o GROQ_API_KEYS
+nano .env   # TELEGRAM_BOT_TOKEN, GROQ_API_KEY or GROQ_API_KEYS
 ```
 
-Unidad: `metavideototext-bot.service` (copia en esta carpeta).
+Unit: `metavideototext-bot.service` (a copy is in this folder).
 
 ```bash
 sudo systemctl enable --now metavideototext-bot
 journalctl -u metavideototext-bot -f
 ```
 
-Tests locales (PC):
+Local tests (PC):
 
 ```bash
 python -m pytest tests -q
 ```
 
-## Qué demuestra
+## What it shows
 
-Límites de API, no reventar una cuenta con cookies, recortar alcance del bot (Gemini fuera), y vivir con 1 GB.
+API limits, not risking an account with cookies, keeping part of the work off the Pi (Gemini stays outside), and living with 1 GB.

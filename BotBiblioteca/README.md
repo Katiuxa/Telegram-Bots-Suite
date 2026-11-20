@@ -1,27 +1,27 @@
 # Biblioteca Secreta
 
-Bot de Telegram para un catálogo **personal** de epubs en la Raspberry Pi. En el panel maestro de la Pi aparece como `BibliotecaSecreta` (`bot_ebooks.service`).
+Telegram bot for a **personal** EPUB catalog on the Raspberry Pi. On the Pi's master panel it shows up as `BibliotecaSecreta` (`bot_ebooks.service`).
 
-Los libros y `biblioteca.db` viven en el USB Kingston (`/media/admin/KINGSTON`). **No van en este repositorio.**
+The books and `biblioteca.db` live on the Kingston USB drive (`/media/admin/KINGSTON`). **They are not in this repository.**
 
-## Qué hace
+## What it does
 
-1. El usuario escribe un **título** o un **autor**.
-2. El bot consulta **SQLite** (`libros`: titulo, autor, ruta). La búsqueda es `LIKE` por palabras y luego se filtra en Python normalizando tildes.
-3. Lista paginada (10 resultados) con botones de Telegram.
-4. Al elegir un libro: ficha (título, autor, formato EPUB).
-5. **Enviar EPUB:** abre el fichero en el USB y lo manda con `send_document`. Si la ruta del índice no existe en disco, responde error de USB (índice descuadrado).
-6. **Sinopsis** opcional: Google Books API (solo metadatos públicos; si no hay resumen, lo dice).
+1. The user types a **title** or an **author**.
+2. The bot queries **SQLite** (`libros`: titulo, autor, ruta). The search is a `LIKE` by words, then Python filters the hits while normalizing accents.
+3. A paged list (10 results) uses Telegram buttons.
+4. Choosing a book shows a card (title, author, EPUB format).
+5. **Send EPUB:** opens the file on the USB drive and sends it with `send_document`. If the indexed path is not on disk, it replies with a USB error (the index is out of date).
+6. Optional **synopsis:** Google Books API (public metadata only; if there is no summary, it says so).
 
-`INDICE.py` puede generar un `indice.json.gz` auxiliar. `ajustar_biblioteca_usb.py` recorta la colección al espacio real del pendrive y regenera la base para que no queden rutas muertas.
+`INDICE.py` can build an extra `indice.json.gz`. `ajustar_biblioteca_usb.py` trims the collection to the real space on the drive and rebuilds the database so dead paths do not remain.
 
-## Problema y qué se hizo
+## The problem and what was done
 
-La colección **pesaba más que el USB de 128 GB**. No cabía entera.
+The collection **weighed more than the 128 GB USB drive**. It did not fit whole.
 
-Se recortó el árbol de ficheros y se **regeneró SQLite** solo con lo que quedó. Si el índice apunta a un epub borrado, el bot no inventa el archivo: avisa de error físico en USB.
+The file tree was trimmed and **SQLite was rebuilt** with only what remained. If the index points at a deleted EPUB, the bot does not invent the file: it reports a physical error on the USB drive.
 
-Con la MicroSD de 8 GB el sistema no podía hospedar esa biblioteca; los datos van al USB, no a la SD.
+With the 8 GB MicroSD the system could not host that library. The data stays on the USB drive, not on the SD card.
 
 ```bash
 export USB_PATH=/media/admin/KINGSTON
@@ -31,9 +31,9 @@ python3 ajustar_biblioteca_usb.py --dry-run
 
 ## Stack
 
-Python · SQLite · pyTelegramBotAPI · USB montado en Debian · systemd
+Python · SQLite · pyTelegramBotAPI · USB drive mounted on Debian · systemd
 
-## Ejecución
+## Run
 
 ```bash
 cp .env.example .env
@@ -41,8 +41,8 @@ cp .env.example .env
 python3 BotEbooks.py
 ```
 
-Unidad: `bot_ebooks.service`. Comprobar `findmnt $USB_PATH` antes de arrancar.
+Unit: `bot_ebooks.service`. Check `findmnt $USB_PATH` before starting it.
 
-## Qué demuestra
+## What it shows
 
-Índice coherente con el disco, consulta SQL en un volumen externo, y envío del fichero por Telegram solo si existe en el USB.
+An index that matches the disk, SQL queries on an external volume, and a Telegram file send only when the file exists on the USB drive.
